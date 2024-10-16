@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edulink - About Us</title>
+    <style>
+        :root {
+            --primary-bg-color: #252E59;
+            --secondary-bg-color: #7A88D4;
+            --text-color: #fff;
+            --button-bg-color: #6C63FF;
+            --button-hover-bg-color: #002569;
+            --input-bg-color: #ffffff;
+            --input-text-color: #000000;
+        }
+
+        [data-theme="dark"] {
+            --primary-bg-color: #1a1a1a;
+            --secondary-bg-color: #333;
+            --text-color: #e0e0e0;
+            --button-bg-color: #0056b3;
+            --button-hover-bg-color: #004494;
+            --input-bg-color: #333;
+            --input-text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg-color), var(--secondary-bg-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: transparent;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 1rem;
+        }
+
+        .navbar .auth-btn {
+            border: 2px solid var(--text-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar .auth-btn:hover {
+            background-color: var(--primary-bg-color);
+        }
+
+        .about-us-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .about-us-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .about-us-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 800px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        .about-us-content .team-section {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 1000px;
+            flex-wrap: wrap;
+        }
+
+        .about-us-content .team-section .team-member {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            text-align: center;
+            width: 250px;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: fadeInUp 2s ease forwards;
+        }
+
+        .about-us-content .team-section .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .about-us-content .team-section .team-member h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .about-us-content .team-section .team-member p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .dark-mode-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--text-color);
+            background-color: transparent;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: var(--primary-bg-color);
+            transform: scale(1.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-mode-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">Edulink</a>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+            <a href="about-us.html">About us</a>
+        </nav>
+    </header>
+
+    <!-- About Us Content -->
+    <div class="about-us-content">
+        <h1>About Us</h1>
+        <p>
+            At Edulink, we are dedicated to providing seamless, secure, and accessible virtual meeting solutions for everyone. 
+            Our platform is designed to make communication easy, efficient, and effective, empowering users with the tools they 
+            need to connect and collaborate effortlessly.
+        </p>
+
+        <div class="team-section">
+            <div class="team-member">
+                <img src="C:\Users\KACEM\Desktop\IMG_20241008_210347_408.webp" alt="Team Member">
+                <h3>Kacem Akhaicha</h3>
+                <p>Founder & CEO</p>
+            </div>
+            <div class="team-member">
+                <img src="C:\Users\KACEM\Desktop\IMG_20241008_210347_408.webp" alt="Team Member">
+                <h3>Kacem Akhaicha</h3>
+                <p>Head of Operations</p>
+            </div>
+            <div class="team-member">
+                <img src="C:\Users\KACEM\Desktop\IMG_20241008_210347_408.webp" alt="Team Member">
+                <h3>Kacem Akhaicha</h3>
+                <p>Lead Developer</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <svg class="dark-mode-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 1 0 9.64 12.65A9 9 0 0 1 12 2zm0 18a8 8 0 0 1-7.31-4.68A10.04 10.04 0 0 0 12 22a9.93 9.93 0 0 0 7.58-3.58A8 8 0 0 1 12 20z" />
+        </svg>
+    </button>
+
+    <script>
+        // Check localStorage for theme preference on page load
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        // Dark Mode Toggle
+        const toggleBtn = document.getElementById('darkModeToggle');
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>

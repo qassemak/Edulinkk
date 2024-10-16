@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edulink - Create a Room</title>
+    <style>
+        :root {
+            --primary-bg-color: #252E59;
+            --secondary-bg-color: #7A88D4;
+            --text-color: #fff;
+            --button-bg-color: #154eb8;
+            --button-hover-bg-color: #002569;
+            --input-bg-color: #ffffff;
+            --input-text-color: #000000;
+        }
+
+        [data-theme="dark"] {
+            --primary-bg-color: #1a1a1a;
+            --secondary-bg-color: #333;
+            --text-color: #e0e0e0;
+            --button-bg-color: #0056b3;
+            --button-hover-bg-color: #004494;
+            --input-bg-color: #333;
+            --input-text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg-color), var(--secondary-bg-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: transparent;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 1rem;
+        }
+
+        .navbar .username-btn {
+            border: 2px solid var(--text-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar .username-btn:hover {
+            background-color: var(--primary-bg-color);
+        }
+
+        .create-room-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .create-room-form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .create-room-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .create-room-form input,
+        .create-room-form textarea,
+        .create-room-form select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--input-bg-color);
+            color: var(--input-text-color);
+            font-size: 1rem;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-room-form input:focus,
+        .create-room-form textarea:focus,
+        .create-room-form select:focus {
+            outline: none;
+            box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.3);
+        }
+
+        .create-room-form button {
+            width: 100%;
+            background-color: var(--button-bg-color);
+            color: var(--text-color);
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .create-room-form button:hover {
+            background-color: var(--button-hover-bg-color);
+        }
+
+        .dark-mode-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--text-color);
+            background-color: transparent;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: var(--primary-bg-color);
+            transform: scale(1.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-mode-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+        }
+
+        .password-section {
+            display: none; /* Hide initially */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">Edulink</a>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+            <a href="about-us.html">About us</a>
+            <a href="#" class="username-btn">Username</a>
+        </nav>
+    </header>
+
+
+    <!-- Create Room Form Content -->
+    <div class="create-room-content">
+        <form class="create-room-form" id="createRoomForm">
+            <h2>Create a Room</h2>
+            <input type="text" id="roomName" placeholder="Room Name" required oninput="checkRoomAvailability()">
+            <span id="availabilityMessage" style="color: yellow;"></span>
+            <textarea placeholder="Room Description" rows="5" required></textarea>
+            <select id="roomSettings" onchange="togglePasswordSection()">
+                <option value="public">Public Room</option>
+                <option value="private">Private Room</option>
+            </select>
+            <div class="password-section" id="passwordSection">
+                <input type="password" id="roomPassword" placeholder="Room Password" required>
+            </div>
+            <button type="submit">Create Room</button>
+        </form>
+    </div>
+
+    <!-- Minimalist Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <svg class="dark-mode-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 1 0 9.64 12.65A9 9 0 0 1 12 2zm0 18a8 8 0 0 1-7.31-4.68A10.04 10.04 0 0 0 12 22a9.93 9.93 0 0 0 7.58-3.58A8 8 0 0 1 12 20z" />
+        </svg>
+    </button>
+
+    <script>
+        // Dark Mode Toggle
+        const toggleBtn = document.getElementById('darkModeToggle');
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light'); // Save light theme
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark'); // Save dark theme
+            }
+        });
+
+        // Check the saved theme on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        // Check Room Availability (Mockup)
+        function checkRoomAvailability() {
+            const roomName = document.getElementById('roomName').value;
+            const availabilityMessage = document.getElementById('availabilityMessage');
+
+            // Simulate a room name check (Replace with actual API call)
+            if (roomName.toLowerCase() === "testroom") {
+                availabilityMessage.textContent = "Room name is already taken.";
+                availabilityMessage.style.color = "red";
+            } else {
+                availabilityMessage.textContent = "Room name is available.";
+                availabilityMessage.style.color = "green";
+            }
+        }
+
+        // Toggle Password Section
+        function togglePasswordSection() {
+            const roomSettings = document.getElementById('roomSettings').value;
+            const passwordSection = document.getElementById('passwordSection');
+
+            if (roomSettings === 'private') {
+                passwordSection.style.display = 'block'; // Show password section
+            } else {
+                passwordSection.style.display = 'none'; // Hide password section
+            }
+        }
+
+        // Form Submission
+        document.getElementById('createRoomForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            alert("Room created successfully!");
+            // You can add the logic here to actually create the room
+        });
+    </script>
+</body>
+</html>

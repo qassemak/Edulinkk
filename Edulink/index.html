@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edulink</title>
+    <style>
+        :root {
+            --primary-bg-color: #252E59;
+            --secondary-bg-color: #7A88D4;
+            --text-color: #fff;
+            --button-bg-color: #6C63FF; /* Updated button color */
+            --button-hover-bg-color: #4E48D4; /* A darker shade for hover */
+            --carousel-bg-color: rgba(255, 255, 255, 0.2);
+            --input-bg-color: #ffffff;
+            --input-text-color: #000000;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --primary-bg-color: #1a1a1a;
+            --secondary-bg-color: #333;
+            --text-color: #e0e0e0;
+            --button-bg-color: #6C63FF; /* Retain same button color in dark mode */
+            --button-hover-bg-color: #4E48D4;
+            --carousel-bg-color: rgba(50, 50, 50, 0.6);
+            --input-bg-color: #333;
+            --input-text-color: #ffffff;
+        }
+
+        /* Reset and box-sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg-color), var(--secondary-bg-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: transparent;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 1rem;
+        }
+
+        .navbar .auth-btn {
+            border: 2px solid var(--text-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar .auth-btn:hover {
+            background-color: var(--primary-bg-color);
+        }
+
+        /* Main container */
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 0 50px;
+            flex-grow: 1;
+        }
+
+        /* Left column for text */
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-content h1 {
+            font-size: 8rem;
+            margin-bottom: 15px;
+        }
+
+        .left-content p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Call-to-action button */
+        .cta-btn {
+            background-color: var(--button-bg-color); /* Updated color */
+            padding: 20px 20px;
+            width: 180px;
+            border: none;
+            border-radius: 25px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--button-hover-bg-color); /* Updated hover color */
+        }
+
+        /* Right column for images (carousel) */
+        .carousel-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-direction: column;
+        }
+
+        .carousel {
+            width: 500px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--carousel-bg-color);
+            padding: 20px;
+        }
+
+        .carousel img {
+            width: 80%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: opacity 0.5s ease;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        .carousel img.active {
+            opacity: 1;
+        }
+
+        /* Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .carousel-dots .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-dots .dot.active {
+            background-color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 0 20px;
+            }
+
+            .carousel {
+                width: 300px;
+                height: 200px;
+                margin-top: 30px;
+            }
+
+            .left-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .left-content p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Dark mode toggle button */
+        .dark-mode-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--text-color);
+            background-color: transparent;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: var(--primary-bg-color);
+            transform: scale(1.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-mode-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">Edulink</a>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+            <a href="about-us.html">About us</a>
+            <a href="signup.html" class="auth-btn" id="signUpButton">Sign Up</a>
+            <a href="login.html" class="auth-btn" id="loginButton">Login</a>
+        </nav>
+    </header>
+    
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="left-content">
+            <h1>Edulink</h1>
+            <p>Make your meetings easy, secure, and fully accessible</p>
+            <a href="create-room.html" class="cta-btn">Create a room +</a>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel">
+                <img id="carousel-img-1" src="file:///C:/Users/KACEM/Desktop/undraw_group_video_re_btu7.svg" alt="Meeting setup" class="active">
+                <img id="carousel-img-2" src="file:///C:/Users/KACEM/Desktop/undraw_secure_login_pdn4.svg" alt="Security check">
+                <img id="carousel-img-3" src="file:///C:/Users/KACEM/Desktop/undraw_real_time_sync_re_nky7.svg" alt="Laptop setup">
+            </div>
+
+            <!-- Dots -->
+            <div class="carousel-dots">
+                <div class="dot active" onclick="showSlide(0)"></div>
+                <div class="dot" onclick="showSlide(1)"></div>
+                <div class="dot" onclick="showSlide(2)"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <svg class="dark-mode-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 1 0 9.64 12.65A9 9 0 0 1 12 2zm0 18a8 8 0 0 1-7.31-4.68A10.04 10.04 0 0 0 12 22a9.93 9.93 0 0 0 7.58-3.58A8 8 0 0 1 12 20z" />
+        </svg>
+    </button>
+
+    <script>
+        // Dark Mode Toggle
+        const toggleBtn = document.getElementById('darkModeToggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Carousel functionality with auto-swiping
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.carousel img');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                dots[i].classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                    dots[i].classList.add('active');
+                }
+            });
+            slideIndex = index;
+        }
+
+        // Auto-swipe every 5 seconds
+        function autoSwipe() {
+            slideIndex = (slideIndex + 1) % slides.length;
+            showSlide(slideIndex);
+        }
+        setInterval(autoSwipe, 5000); // 5 seconds interval
+    </script>
+</body>
+</html>
